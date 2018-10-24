@@ -1,30 +1,33 @@
-import * as mongoose from "mongoose";
-import { userSchema, User, IUserModel } from "../models/userModel";
+import { injectable, inject } from "inversify";
+import "reflect-metadata";
+import TYPES from "../../types";
+import { User } from "../models/userModel";
 import { Request, Response } from "express";
-import { UserService } from "../services/userService";
 import { NextFunction } from "express-serve-static-core";
+import { IUserService } from "src/services/interfaces/IUserService";
 
+@injectable()
 export class UserController {
 
-    // private readonly _userService: UserService;
-    public userService: UserService = new UserService();
+    private readonly _userService: IUserService;
 
-    /**
-     *
-     */
-    // constructor(userService: UserService) {
-    //     if (!userService) {
-    //         console.log("patka");
-    //     }
-    //     this._userService = userService;
-    // }
+    constructor(
+        @inject(TYPES.IUserService) userService: IUserService
+    ) {
+        if (!userService){
+            throw new Error("UserService can not be null!")
+        }
+
+        this._userService = userService;
+    }
+
     public async registerUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             let responseStatus: number = 0;
             let responseData = {};
 
             let newUser = new User(req.body);
-            await this.userService.registerUserInDb(newUser);
+            await this._userService.registerUserInDb(newUser);
             responseStatus = 200;
             responseData = newUser;
 
@@ -51,7 +54,7 @@ export class UserController {
             let responseStatus: number = 0;
             let responseData = {};
 
-            const users = await this.userService.getAllUsersFromDb();
+            const users = await this._userService.getAllUsersFromDb();
 
             if (!users || users.length === 0) {
                 responseStatus = 404;

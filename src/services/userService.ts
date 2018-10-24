@@ -1,8 +1,10 @@
-import * as mongoose from "mongoose";
-import { userSchema, User, IUserModel } from "../models/userModel";
-import { Request, Response, NextFunction } from "express";
+import { injectable } from "inversify";
+import "reflect-metadata";
+import { User, IUserModel } from "../models/userModel";
 
+@injectable()
 export class UserService {
+    
     public async registerUserInDb(newUser: IUserModel): Promise<void> {
         await newUser.save();
         console.log("User registered successfully!")

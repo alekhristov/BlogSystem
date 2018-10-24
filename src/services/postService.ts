@@ -1,11 +1,10 @@
-import * as mongoose from "mongoose";
-import { postSchema, IPostModel, Post } from "../models/postModel";
-import { Request, Response } from "express";
-import { UserService } from "./userService";
+import { injectable } from "inversify";
+import "reflect-metadata";
+import { IPostModel, Post } from "../models/postModel";
+import { IPostService } from "./interfaces/IPostService";
 
-export class PostService {
-
-    public userService: UserService = new UserService();
+@injectable()
+export class PostService implements IPostService {
 
     public async getAllPostsFromDb(): Promise<IPostModel[]> {
         return Post.find({}).exec();

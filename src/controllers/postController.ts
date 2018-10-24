@@ -1,31 +1,48 @@
-import * as mongoose from "mongoose";
-import { postSchema, Post } from "../models/postModel";
+import { injectable, inject } from "inversify";
+import "reflect-metadata";
+import TYPES from "../../types";
+import { Post } from "../models/postModel";
 import { Request, Response } from "express";
-import { PostService } from "../services/postService";
 import { NextFunction } from "connect";
-import { UserService } from "../services/userService";
+import { IPostService } from "src/services/interfaces/IPostService";
+import { IUserService } from "src/services/interfaces/IUserService";
 
-
+@injectable()
 export class PostController {
 
-    public postService: PostService = new PostService();
-    public userService: UserService = new UserService();
+    private readonly _postService : IPostService;
+    private readonly _userService : IUserService;
+
+    public constructor(
+        @inject(TYPES.IPostService) postService: IPostService,
+        @inject(TYPES.IUserService) userService: IUserService
+    ) {
+        if (!postService){
+            throw new Error("PostService can not be null!")
+        }
+        if (!userService){
+            throw new Error("UserService can not be null!")
+        }
+
+        this._postService = postService;
+        this._userService = userService;
+    }
 
     public async getAllPosts(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             let responseStatus: number = 0;
             let responseData = {};
 
-            const posts = await this.postService.getAllPostsFromDb();
+            const posts = await this._postService.getAllPostsFromDb();
 
-            if (!posts || posts.length === 0){
+            if (!posts || posts.length === 0) {
                 responseStatus = 404;
                 throw new Error("There is no posts yet!")
             }
-                responseStatus = 200;
-                responseData = posts;
+            responseStatus = 200;
+            responseData = posts;
 
-                res.status(responseStatus).send(responseData);
+            res.status(responseStatus).send(responseData);
         } catch (error) {
             res.status(500).send(error.message)
         }
@@ -36,15 +53,15 @@ export class PostController {
             let responseStatus: number = 0;
             let responseData = {};
 
-            const user = await this.userService.getUserByUsernameFromDb(req.params.username);
-            
+            const user = await this._userService.getUserByUsernameFromDb(req.params.username);
+
             if (!user) {
                 throw new Error("There is no such user!")
             }
 
             const userId = user.id;
             const allPostsForUser = await Post.find({ "author": userId }).exec();
-            
+
             if (allPostsForUser.length > 0) {
                 responseStatus = 200;
                 responseData = allPostsForUser;
@@ -65,7 +82,7 @@ export class PostController {
             let responseData = {};
 
             let newPost = new Post(req.body);
-            await this.postService.createPostForUserInDb(newPost);
+            await this._postService.createPostForUserInDb(newPost);
             responseStatus = 200;
             responseData = newPost;
 
