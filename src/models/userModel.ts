@@ -1,7 +1,7 @@
-import { Document, Schema, Model, model} from "mongoose";
+import { Document, Schema, Model, model } from "mongoose";
 import { IUser } from "./interfaces/user";
 
-export interface IUserModel extends IUser, Document {};
+export interface IUserModel extends IUser, Document { };
 
 export const userSchema = new Schema({
     name: {
@@ -19,16 +19,12 @@ export const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: "Enter password"          
+        required: "Enter password"
     },
     email: {
-        type: String,            
+        type: String,
         // match: "/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;",
-    },
-    posts: [{
-        type: Schema.Types.ObjectId, 
-        ref: "Post"
-    }]
+    }
 });
 
 export const User: Model<IUserModel> = model<IUserModel>("User", userSchema);

@@ -19,7 +19,9 @@ export class Routes {
 
         // GET All posts of a user
         app.route("/api/users/:username/posts")
-            .get(this.postController.getAllPostsForUser);
+            .get((req, res, next) => {
+                this.postController.getAllPostsForUser(req, res, next);
+            });
 
         // GET All users
         app.route("/api/users")

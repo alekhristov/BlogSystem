@@ -20,36 +20,49 @@ export class UserController {
     // }
     public async registerUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
+            let responseStatus: number = 0;
+            let responseData = {};
+
             let newUser = new User(req.body);
             this.userService.registerUserInDb(newUser);
-            res.status(200).json(newUser);
+            responseStatus = 200;
+            responseData = newUser;
+
+            res.status(responseStatus).json(responseData);
 
         } catch (error) {
-            res.status(400).send(error);
+            res.status(500).send(error.message);
         }
     };
 
-    public async getUserIdByUsername(req: Request, res: Response, next: NextFunction): Promise<string> {
-        try {
-            const user = await this.userService.getUserByUsernameFromDb(req.body.username);
+    // public async getUserIdByUsername(req: Request, res: Response, next: NextFunction): Promise<string> {
+    //     try {
+    //         const user = await this.userService.getUserByUsernameFromDb(req.body.username);
 
-            console.log(user.id);
-            return user.id;
-        } catch (error) {
-            throw (error);
-        }
-    };
+    //         console.log(user.id);
+    //         return user.id;
+    //     } catch (error) {
+    //         throw (error);
+    //     }
+    // };
 
-    public async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
+            let responseStatus: number = 0;
+            let responseData = {};
+
             const users = await this.userService.getAllUsersFromDb();
-            if (users.length > 0) {
-                return res.status(200).send(users);
-            }
 
-            res.status(404).send();
+            if (!users || users.length === 0) {
+                responseStatus = 404;
+                throw new Error("There is no users yet!");
+            }
+            responseStatus = 200;
+            responseData = users;
+
+            res.status(responseStatus).json(responseData);
         } catch (error) {
-            return res.status(500).send(error)
+            res.status(404).json(error.message)
         }
     };
 }

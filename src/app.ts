@@ -28,6 +28,7 @@ export default class App {
     };
 
     private mongoSetup(): void {
+        mongoose.set('useCreateIndex', true);
         mongoose.connect(this._mongoUrl, { useNewUrlParser: true });
         (<any>mongoose).Promise = global.Promise;
         const db = mongoose.connection;
