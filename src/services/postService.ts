@@ -12,7 +12,7 @@ export class PostService {
     };
 
     public async createPostForUserInDb(newPost: IPostModel): Promise<void> {
-        newPost.save();
+        await newPost.save();
         console.log("Post saved successfully!")
     };
 }

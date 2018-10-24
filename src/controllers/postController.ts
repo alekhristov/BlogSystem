@@ -65,7 +65,7 @@ export class PostController {
             let responseData = {};
 
             let newPost = new Post(req.body);
-            this.postService.createPostForUserInDb(newPost);
+            await this.postService.createPostForUserInDb(newPost);
             responseStatus = 200;
             responseData = newPost;
 
