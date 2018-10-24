@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 
 export class UserService {
     public async registerUserInDb(newUser: IUserModel): Promise<void> {
-        newUser.save();
+        await newUser.save();
         console.log("User registered successfully!")
     };
 

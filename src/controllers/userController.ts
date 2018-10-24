@@ -24,7 +24,7 @@ export class UserController {
             let responseData = {};
 
             let newUser = new User(req.body);
-            this.userService.registerUserInDb(newUser);
+            await this.userService.registerUserInDb(newUser);
             responseStatus = 200;
             responseData = newUser;
 
