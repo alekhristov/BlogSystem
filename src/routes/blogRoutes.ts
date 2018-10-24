@@ -1,10 +1,10 @@
-import { inject } from "inversify";
-import "reflect-metadata";
+import { inject, injectable } from "inversify";
 import TYPES from "../../types";
 import { Request, Response } from "express";
 import { IUserController } from "../controllers/interfaces/IUserController";
 import { IPostController } from "../controllers/interfaces/IPostController";
 
+@injectable()
 export class Routes {
 
     private readonly _postController: IPostController;

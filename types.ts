@@ -4,7 +4,9 @@ let TYPES = {
     IPostController: Symbol("IPostController"),
     IUserController: Symbol("IUserController"),
     IPostModel: Symbol("IPostModel"),
-    IUserModel: Symbol("IUserModel")
+    IUserModel: Symbol("IUserModel"),
+    App: Symbol("App"),
+    Routes: Symbol("Routes")
 };
 
 export default TYPES;

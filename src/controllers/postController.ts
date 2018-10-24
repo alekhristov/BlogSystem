@@ -1,14 +1,13 @@
 import { injectable, inject } from "inversify";
-import "reflect-metadata";
 import TYPES from "../../types";
 import { Post } from "../models/postModel";
-import { Request, Response } from "express";
-import { NextFunction } from "connect";
+import { Request, Response, NextFunction } from "express-serve-static-core";
 import { IPostService } from "src/services/interfaces/IPostService";
 import { IUserService } from "src/services/interfaces/IUserService";
+import { IPostController } from "./interfaces/IPostController";
 
 @injectable()
-export class PostController {
+export class PostController implements IPostController{
 
     private readonly _postService : IPostService;
     private readonly _userService : IUserService;

@@ -1,5 +1,4 @@
 import { injectable } from "inversify";
-import "reflect-metadata";
 import { IPostModel, Post } from "../models/postModel";
 import { IPostService } from "./interfaces/IPostService";
 

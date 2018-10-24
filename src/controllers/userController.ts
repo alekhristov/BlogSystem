@@ -1,20 +1,20 @@
-import { injectable, inject } from "inversify";
-import "reflect-metadata";
+import { NextFunction, Request, Response } from "express-serve-static-core";
+import { inject, injectable } from "inversify";
+
+import { IUserController } from "./interfaces/IUserController";
+import { IUserService } from "src/services/interfaces/IUserService";
 import TYPES from "../../types";
 import { User } from "../models/userModel";
-import { Request, Response } from "express";
-import { NextFunction } from "express-serve-static-core";
-import { IUserService } from "src/services/interfaces/IUserService";
 
 @injectable()
-export class UserController {
+export class UserController implements IUserController{
 
     private readonly _userService: IUserService;
 
     constructor(
         @inject(TYPES.IUserService) userService: IUserService
     ) {
-        if (!userService){
+        if (!userService) {
             throw new Error("UserService can not be null!")
         }
 

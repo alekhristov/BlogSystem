@@ -1,14 +1,8 @@
 import App from "./app";
-import { UserService } from "./services/userService";
-import { UserController } from "./controllers/userController";
+import TYPES from "../types";
+import container from "../inversify.config";
 
-const userService = new UserService();
-const userController = new UserController();
-
-// services => controlelrite
-// controllers => router
-
-const app = (new App()).app;
+const app = container.get<App>(TYPES.App).app;
 const PORT = 3000;
 
 app.listen(PORT, () => {

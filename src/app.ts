@@ -1,15 +1,23 @@
+import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as mongoose from "mongoose";
-import * as bodyParser from "body-parser";
-import { Routes } from "./routes/blogRoutes";
 
+import { inject, injectable } from "inversify";
+
+import { Routes } from "./routes/blogRoutes";
+import TYPES from "../types";
+
+@injectable()
 export default class App {
 
     private _app: express.Application;
-    private _routePrv: Routes = new Routes();
+    private _routePrv: Routes; 
     private _mongoUrl: string = "mongodb://localhost:27017/blogSystemDb";
 
-    constructor() {
+    constructor(
+        @inject(TYPES.Routes) routes: Routes,
+    ) {
+        this._routePrv = routes;
         this._app = express();
         this.config();
         this._routePrv.routes(this._app);
@@ -28,7 +36,7 @@ export default class App {
     };
 
     private mongoSetup(): void {
-        mongoose.set('useCreateIndex', true);
+        mongoose.set("useCreateIndex", true);
         mongoose.connect(this._mongoUrl, { useNewUrlParser: true });
         (<any>mongoose).Promise = global.Promise;
         const db = mongoose.connection;

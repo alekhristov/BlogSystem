@@ -1,5 +1,4 @@
 import { injectable } from "inversify";
-import "reflect-metadata";
 import { User, IUserModel } from "../models/userModel";
 
 @injectable()
