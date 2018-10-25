@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -20,7 +21,7 @@ const blogRoutes_1 = require("./routes/blogRoutes");
 const types_1 = require("./types");
 let App = class App {
     constructor(routes) {
-        this._mongoUrl = "mongodb://mongodb:27017/blogSystemDb";
+        this._mongoUrl = `mongodb://${process.env.MONGO_URL}:27017/blogSystemDb`;
         this._routePrv = routes;
         this._app = express();
         this.config();
@@ -44,10 +45,12 @@ let App = class App {
         mongoose.Promise = global.Promise;
         const db = mongoose.connection;
         db.on("error", err => {
-            console.error("Error while connecting to DB: ${err.message}");
+            console.error(`Error while connecting to DB: ${err.message}`);
+            console.log(`Failed to connect to database on: ${this._mongoUrl}`);
         });
         db.once("open", () => {
             console.log("DB connected successfully!");
+            console.log(`Connect to database on: ${this._mongoUrl}`);
         });
     }
     ;

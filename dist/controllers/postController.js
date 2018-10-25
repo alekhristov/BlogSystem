@@ -70,7 +70,8 @@ let PostController = class PostController {
                     responseData = allPostsForUser;
                 }
                 else {
-                    responseStatus = 404;
+                    responseStatus = 400;
+                    responseData = "The user has no posts yet!";
                 }
                 res.status(responseStatus).send(responseData);
             }

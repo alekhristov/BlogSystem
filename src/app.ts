@@ -1,3 +1,4 @@
+require("dotenv").config();
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as mongoose from "mongoose";
@@ -12,7 +13,7 @@ export default class App {
 
     private _app: express.Application;
     private _routePrv: Routes; 
-    private _mongoUrl: string = "mongodb://mongodb:27017/blogSystemDb";
+    private _mongoUrl: string = `mongodb://${process.env.MONGO_URL}:27017/blogSystemDb`;
 
     constructor(
         @inject(TYPES.Routes) routes: Routes,
@@ -43,10 +44,12 @@ export default class App {
 
 
         db.on("error", err => {
-            console.error("Error while connecting to DB: ${err.message}");
+            console.error(`Error while connecting to DB: ${err.message}`);
+            console.log(`Failed to connect to database on: ${this._mongoUrl}`);
         });
         db.once("open", () => {
             console.log("DB connected successfully!");
+            console.log(`Connect to database on: ${this._mongoUrl}`);
         });
     };
 };

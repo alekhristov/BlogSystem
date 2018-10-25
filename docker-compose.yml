@@ -2,6 +2,8 @@ version: "3.5"
 services:
   bs_api:
     container_name: bs_api
+    environment:
+      MONGO_URL: mongodb
     image: node
     working_dir: /app
     volumes:
