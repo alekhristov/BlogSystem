@@ -9,14 +9,16 @@ exports.postSchema = new mongoose_1.Schema({
     },
     content: {
         type: String,
-        min: [3, "You need to enter at least 3 characters"],
-        max: [1000, "You can not enter more than 1000 characters"],
+        minlength: 3,
+        maxlength: 1000,
+        description: "Must be between 3 and 1000 characters",
         required: true
     },
     title: {
         type: String,
-        min: [3, "You need to enter at least 3 characters"],
-        max: [25, "You can not enter more than 25 characters"],
+        minlength: 3,
+        maxlength: 25,
+        description: "Must be between 3 and 25 characters",
         required: true
     },
     author: {

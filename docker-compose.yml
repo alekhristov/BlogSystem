@@ -1,0 +1,26 @@
+version: "3.5"
+services:
+  bs_api:
+    container_name: bs_api
+    image: node
+    working_dir: /app
+    volumes:
+      - .:/app:delegated
+    ports:
+      - 3000:3000
+    networks:
+      - blogsystem
+    command: /bin/bash -c 'npm install && npm run start'
+
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    volumes:
+      - ./data-dev:/data/db:delegated
+    ports:
+      - 27017:27017
+    networks:
+      - blogsystem
+
+networks:
+  blogsystem:

@@ -5,14 +5,14 @@ import * as mongoose from "mongoose";
 import { inject, injectable } from "inversify";
 
 import { Routes } from "./routes/blogRoutes";
-import TYPES from "../types";
+import TYPES from "./types";
 
 @injectable()
 export default class App {
 
     private _app: express.Application;
     private _routePrv: Routes; 
-    private _mongoUrl: string = "mongodb://localhost:27017/blogSystemDb";
+    private _mongoUrl: string = "mongodb://mongodb:27017/blogSystemDb";
 
     constructor(
         @inject(TYPES.Routes) routes: Routes,
