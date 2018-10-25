@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import TYPES from "../../types";
+import TYPES from "../types";
 import { Request, Response } from "express";
 import { IUserController } from "../controllers/interfaces/IUserController";
 import { IPostController } from "../controllers/interfaces/IPostController";

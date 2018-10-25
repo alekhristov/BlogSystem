@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from "express-serve-static-core";
 import { inject, injectable } from "inversify";
 
 import { IUserController } from "./interfaces/IUserController";
-import { IUserService } from "src/services/interfaces/IUserService";
-import TYPES from "../../types";
+import { IUserService } from "../services/interfaces/IUserService";
+import TYPES from "../types";
 import { User } from "../models/userModel";
 
 @injectable()

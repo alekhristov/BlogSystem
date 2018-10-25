@@ -1,11 +1,29 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const userController_1 = require("../controllers/userController");
-const postController_1 = require("../controllers/postController");
-class Routes {
-    constructor() {
-        this.userController = new userController_1.UserController();
-        this.postController = new postController_1.PostController();
+const inversify_1 = require("inversify");
+const types_1 = require("../types");
+let Routes = class Routes {
+    constructor(postController, userController) {
+        if (!postController) {
+            throw new Error("PostController can not be null!");
+        }
+        if (!userController) {
+            throw new Error("UserController can not be null!");
+        }
+        this._postController = postController;
+        this._userController = userController;
     }
     routes(app) {
         // GET Home page
@@ -16,26 +34,37 @@ class Routes {
             });
         });
         // GET All posts of a user
-        // app.route("/api/users/:username/posts")
-        //     .get(this.postController.getAllPostsForUser);
-        // TEST
-        app.route("/test")
-            .get(this.userController.getUserIdByUsername);
+        app.route("/api/users/:username/posts")
+            .get((req, res, next) => {
+            this._postController.getAllPostsForUser(req, res, next);
+        });
         // GET All users
         app.route("/api/users")
-            .get(this.userController.getAllUsers);
+            .get((req, res, next) => {
+            this._userController.getAllUsers(req, res, next);
+        });
         // GET All posts of everyone
         app.route("/api/posts")
-            .get(this.postController.getAllPosts);
+            .get((req, res, next) => {
+            this._postController.getAllPosts(req, res, next);
+        });
         // POST Creates a post for a user
         app.route("/api/users/posts")
-            .post(this.postController.createPostForUser);
+            .post((req, res, next) => {
+            this._postController.createPostForUser(req, res, next);
+        });
         // POST Logs a user into the system an returns JWT
         // /api/login
         // POST register a user into the system
         app.route("/api/register")
-            .post(this.userController.registerUser);
+            .post((req, res, next) => this._userController.registerUser(req, res, next));
     }
-}
+};
+Routes = __decorate([
+    inversify_1.injectable(),
+    __param(0, inversify_1.inject(types_1.default.IPostController)),
+    __param(1, inversify_1.inject(types_1.default.IUserController)),
+    __metadata("design:paramtypes", [Object, Object])
+], Routes);
 exports.Routes = Routes;
 //# sourceMappingURL=blogRoutes.js.map

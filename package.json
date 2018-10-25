@@ -1,12 +1,11 @@
 {
   "name": "nodejs-project",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Asd",
   "scripts": {
     "build": "tsc",
     "dev": "ts-node ./src/runServer.ts",
-    "start": "nodemon ./dist/runServer.js",
+    "start": "npm run build && node ./dist/runServer.js",
     "prod": "npm run build && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,7 +16,13 @@
     "@types/mongoose": "^5.2.19",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "inversify": "^5.0.1",
     "mongoose": "^5.3.5",
-    "nodemon": "^1.18.4"
+    "reflect-metadata": "^0.1.12"
+  },
+  "devDependencies": {
+    "@types/inversify": "^2.0.33",
+    "@types/reflect-metadata": "^0.1.0",
+    "typescript": "^3.1.3"
   }
 }

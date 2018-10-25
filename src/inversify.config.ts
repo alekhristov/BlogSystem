@@ -1,17 +1,17 @@
 import "reflect-metadata";
 
-import App from "./src/app";
+import App from "./app";
 import { Container } from "inversify";
-import { IPostController } from "./src/controllers/interfaces/IPostController";
-import { IPostService } from "./src/services/interfaces/IPostService";
-import { IUserController } from "./src/controllers/interfaces/IUserController";
-import { IUserService } from "./src/services/interfaces/IUserService";
-import { PostController } from "./src/controllers/postController";
-import { PostService } from "./src/services/postService";
-import { Routes } from "./src/routes/blogRoutes";
+import { IPostController } from "./controllers/interfaces/IPostController";
+import { IPostService } from "./services/interfaces/IPostService";
+import { IUserController } from "./controllers/interfaces/IUserController";
+import { IUserService } from "./services/interfaces/IUserService";
+import { PostController } from "./controllers/postController";
+import { PostService } from "./services/postService";
+import { Routes } from "./routes/blogRoutes";
 import TYPES from "./types";
-import { UserController } from "./src/controllers/userController";
-import { UserService } from "./src/services/userService";
+import { UserController } from "./controllers/userController";
+import { UserService } from "./services/userService";
 
 const container = new Container();
 container.bind<App>(TYPES.App).to(App).inSingletonScope();

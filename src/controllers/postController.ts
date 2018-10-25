@@ -1,9 +1,9 @@
 import { injectable, inject } from "inversify";
-import TYPES from "../../types";
+import TYPES from "../types";
 import { Post } from "../models/postModel";
 import { Request, Response, NextFunction } from "express-serve-static-core";
-import { IPostService } from "src/services/interfaces/IPostService";
-import { IUserService } from "src/services/interfaces/IUserService";
+import { IPostService } from "../services/interfaces/IPostService";
+import { IUserService } from "../services/interfaces/IUserService";
 import { IPostController } from "./interfaces/IPostController";
 
 @injectable()
