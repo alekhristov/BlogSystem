@@ -4,7 +4,7 @@ import bcrypt = require("bcrypt");
 
 export interface IUserModel extends IUser, Document { };
 
-const userSchema = new Schema({
+export const userSchema: any = new Schema({
     name: {
         type: String,
         trim: true,
@@ -35,16 +35,16 @@ const userSchema = new Schema({
     }
 });
 
-// //hashing a password before saving it to the database
-// userSchema.pre('save', function (next) {
-//     let user = this;
-//     bcrypt.hash(user.password, 10, function (err, hash){
-//       if (err) {
-//         return next(err);
-//       }
-//       user.password = hash;
-//       next();
-//     })
-//   });
+//hashing a password before saving it to the database
+userSchema.pre("save", function (next) {
+    let user = this;
+    bcrypt.hash(user.password, 10, function (err, hash) {
+        if (err) {
+            return next(err);
+        }
+        user.password = hash;
+        next();
+    })
+});
 
 export const User: Model<IUserModel> = model<IUserModel>("User", userSchema);
