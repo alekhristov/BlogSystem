@@ -45,8 +45,8 @@ let App = class App {
         mongoose.Promise = global.Promise;
         const db = mongoose.connection;
         db.on("error", err => {
-            console.error(`Error while connecting to DB: ${err.message}`);
             console.log(`Failed to connect to database on: ${this._mongoUrl}`);
+            console.error(`Error while connecting to DB: ${err.message}`);
         });
         db.once("open", () => {
             console.log("DB connected successfully!");

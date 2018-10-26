@@ -44,8 +44,8 @@ export default class App {
 
 
         db.on("error", err => {
-            console.error(`Error while connecting to DB: ${err.message}`);
             console.log(`Failed to connect to database on: ${this._mongoUrl}`);
+            console.error(`Error while connecting to DB: ${err.message}`);
         });
         db.once("open", () => {
             console.log("DB connected successfully!");
