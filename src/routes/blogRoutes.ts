@@ -3,6 +3,8 @@ import TYPES from "../types";
 import { Request, Response } from "express";
 import { IUserController } from "../controllers/interfaces/IUserController";
 import { IPostController } from "../controllers/interfaces/IPostController";
+import passport = require("passport");
+import { authLocal } from "../auth/passport";
 
 @injectable()
 export class Routes {
@@ -60,7 +62,12 @@ export class Routes {
             });
 
         // POST Logs a user into the system an returns JWT
-        // /api/login
+        // //api/login
+        // app.route("/api/login")
+        //     .post((req, res, next) => {
+        //         this._userController.loginUser(req, res, next)
+        //     });
+        app.post("/api/login", authLocal, this._userController.loginUser);
 
         // POST register a user into the system
         app.route("/api/register")

@@ -4,10 +4,11 @@ import { inject, injectable } from "inversify";
 import { IUserController } from "./interfaces/IUserController";
 import { IUserService } from "../services/interfaces/IUserService";
 import TYPES from "../types";
-import { User } from "../models/userModel";
+import { User } from "../models/User";
+import passport = require("passport");
 
 @injectable()
-export class UserController implements IUserController{
+export class UserController implements IUserController {
 
     private readonly _userService: IUserService;
 
@@ -67,5 +68,21 @@ export class UserController implements IUserController{
         } catch (error) {
             res.status(404).json(error.message)
         }
+    };
+
+    public async loginUser(req: Request, res: Response, next: NextFunction) {
+        // passport.authenticate('local', function (err, user, info) {
+        //     if (err) { return next(err); }
+
+        //     if (!user) { return res.redirect('/login'); }
+        //     req.logIn(user, function (err) {
+        //         if (err) { return next(err); }
+        //         return res.redirect('/users/' + user.username);
+        //     });
+        // })(req, res, next);
+
+        res.status(200).json(req.user);
+
+        return next;
     };
 }

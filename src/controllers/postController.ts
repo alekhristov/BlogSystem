@@ -1,6 +1,6 @@
 import { injectable, inject } from "inversify";
 import TYPES from "../types";
-import { Post } from "../models/postModel";
+import { Post } from "../models/Post";
 import { Request, Response, NextFunction } from "express-serve-static-core";
 import { IPostService } from "../services/interfaces/IPostService";
 import { IUserService } from "../services/interfaces/IUserService";

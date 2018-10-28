@@ -22,7 +22,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const types_1 = require("../types");
-const userModel_1 = require("../models/userModel");
+const User_1 = require("../models/User");
 let UserController = class UserController {
     constructor(userService) {
         if (!userService) {
@@ -35,7 +35,7 @@ let UserController = class UserController {
             try {
                 let responseStatus = 0;
                 let responseData = {};
-                let newUser = new userModel_1.User(req.body);
+                let newUser = new User_1.User(req.body);
                 yield this._userService.registerUserInDb(newUser);
                 responseStatus = 200;
                 responseData = newUser;
@@ -73,6 +73,21 @@ let UserController = class UserController {
             catch (error) {
                 res.status(404).json(error.message);
             }
+        });
+    }
+    ;
+    loginUser(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // passport.authenticate('local', function (err, user, info) {
+            //     if (err) { return next(err); }
+            //     if (!user) { return res.redirect('/login'); }
+            //     req.logIn(user, function (err) {
+            //         if (err) { return next(err); }
+            //         return res.redirect('/users/' + user.username);
+            //     });
+            // })(req, res, next);
+            res.status(200).json(req.user);
+            return next;
         });
     }
     ;

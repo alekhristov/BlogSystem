@@ -1,4 +1,4 @@
-import { IPostModel } from "../../models/postModel";
+import { IPostModel } from "../../models/Post";
 
 export interface IPostService {
     getAllPostsFromDb(): Promise<IPostModel[]>

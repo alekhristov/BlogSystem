@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const types_1 = require("../types");
+const passport_1 = require("../auth/passport");
 let Routes = class Routes {
     constructor(postController, userController) {
         if (!postController) {
@@ -54,7 +55,12 @@ let Routes = class Routes {
             this._postController.createPostForUser(req, res, next);
         });
         // POST Logs a user into the system an returns JWT
-        // /api/login
+        // //api/login
+        // app.route("/api/login")
+        //     .post((req, res, next) => {
+        //         this._userController.loginUser(req, res, next)
+        //     });
+        app.post("/api/login", passport_1.authLocal, this._userController.loginUser);
         // POST register a user into the system
         app.route("/api/register")
             .post((req, res, next) => this._userController.registerUser(req, res, next));

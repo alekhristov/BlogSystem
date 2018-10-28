@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { IPostModel, Post } from "../models/postModel";
+import { IPostModel, Post } from "../models/Post";
 import { IPostService } from "./interfaces/IPostService";
 
 @injectable()

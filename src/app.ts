@@ -7,6 +7,7 @@ import { inject, injectable } from "inversify";
 
 import { Routes } from "./routes/blogRoutes";
 import TYPES from "./types";
+import passport = require("passport");
 
 @injectable()
 export default class App {
@@ -34,6 +35,8 @@ export default class App {
         this._app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this._app.use(bodyParser.urlencoded({ extended: false }));
+        this._app.use(passport.initialize());
+        // this._app.use(passport.session());
     };
 
     private mongoSetup(): void {

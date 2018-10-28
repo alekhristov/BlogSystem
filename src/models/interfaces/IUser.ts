@@ -1,0 +1,10 @@
+import { Document } from "mongoose";
+
+export interface IUser extends Document{
+  name: string;
+  username: string;
+  password: string;
+  email?: string;
+
+  isValidPassword(password: string, user: IUser): Promise<Boolean>;
+};

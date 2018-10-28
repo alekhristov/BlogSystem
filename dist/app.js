@@ -19,6 +19,7 @@ const mongoose = require("mongoose");
 const inversify_1 = require("inversify");
 const blogRoutes_1 = require("./routes/blogRoutes");
 const types_1 = require("./types");
+const passport = require("passport");
 let App = class App {
     constructor(routes) {
         this._mongoUrl = `mongodb://${process.env.MONGO_URL}:27017/blogSystemDb`;
@@ -37,6 +38,8 @@ let App = class App {
         this._app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this._app.use(bodyParser.urlencoded({ extended: false }));
+        this._app.use(passport.initialize());
+        // this._app.use(passport.session());
     }
     ;
     mongoSetup() {

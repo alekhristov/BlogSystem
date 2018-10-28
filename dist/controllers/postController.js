@@ -22,7 +22,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const types_1 = require("../types");
-const postModel_1 = require("../models/postModel");
+const Post_1 = require("../models/Post");
 let PostController = class PostController {
     constructor(postService, userService) {
         if (!postService) {
@@ -64,7 +64,7 @@ let PostController = class PostController {
                     throw new Error("There is no such user!");
                 }
                 const userId = user.id;
-                const allPostsForUser = yield postModel_1.Post.find({ "author": userId }).exec();
+                const allPostsForUser = yield Post_1.Post.find({ "author": userId }).exec();
                 if (allPostsForUser.length > 0) {
                     responseStatus = 200;
                     responseData = allPostsForUser;
@@ -86,7 +86,7 @@ let PostController = class PostController {
             try {
                 let responseStatus = 0;
                 let responseData = {};
-                let newPost = new postModel_1.Post(req.body);
+                let newPost = new Post_1.Post(req.body);
                 yield this._postService.createPostForUserInDb(newPost);
                 responseStatus = 200;
                 responseData = newPost;
