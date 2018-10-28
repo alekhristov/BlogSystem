@@ -28,6 +28,7 @@ export class UserController implements IUserController {
             let responseData = {};
 
             let newUser = new User(req.body);
+            console.log(newUser);
             await this._userService.registerUserInDb(newUser);
             responseStatus = 200;
             responseData = newUser;
@@ -35,7 +36,9 @@ export class UserController implements IUserController {
             res.status(responseStatus).json(responseData);
 
         } catch (error) {
-            res.status(500).send(error.message);
+            console.log(error);
+            console.log(error.message);
+            res.status(500).json(error.message);
         }
     };
 

@@ -29,24 +29,24 @@ let Routes = class Routes {
     routes(app) {
         // GET Home page
         app.route('/')
-            .get((req, res) => {
+            .get((req, res, next) => {
             res.status(200).send({
                 message: "GET request successfulll!!!!"
             });
         });
         // GET All posts of a user
         app.route("/api/users/:username/posts")
-            .get((req, res, next) => {
+            .get(passport_1.authJwt, (req, res, next) => {
             this._postController.getAllPostsForUser(req, res, next);
         });
         // GET All users
         app.route("/api/users")
-            .get((req, res, next) => {
+            .get(passport_1.authJwt, (req, res, next) => {
             this._userController.getAllUsers(req, res, next);
         });
         // GET All posts of everyone
         app.route("/api/posts")
-            .get((req, res, next) => {
+            .get(passport_1.authJwt, (req, res, next) => {
             this._postController.getAllPosts(req, res, next);
         });
         // POST Creates a post for a user
@@ -61,6 +61,9 @@ let Routes = class Routes {
         //         this._userController.loginUser(req, res, next)
         //     });
         app.post("/api/login", passport_1.authLocal, this._userController.loginUser);
+        app.get("/jwt/test", passport_1.authJwt, (req, res, next) => {
+            res.send("This is private route");
+        });
         // POST register a user into the system
         app.route("/api/register")
             .post((req, res, next) => this._userController.registerUser(req, res, next));

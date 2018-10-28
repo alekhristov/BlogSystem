@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { IUserController } from "../controllers/interfaces/IUserController";
 import { IPostController } from "../controllers/interfaces/IPostController";
 import passport = require("passport");
-import { authLocal } from "../auth/passport";
+import { authLocal, authJwt } from "../auth/passport";
 
 @injectable()
 export class Routes {
@@ -31,7 +31,7 @@ export class Routes {
 
         // GET Home page
         app.route('/')
-            .get((req: Request, res: Response) => {
+            .get((req, res, next) => {
                 res.status(200).send({
                     message: "GET request successfulll!!!!"
                 })
@@ -39,19 +39,19 @@ export class Routes {
 
         // GET All posts of a user
         app.route("/api/users/:username/posts")
-            .get((req, res, next) => {
+            .get(authJwt, (req, res, next) => {
                 this._postController.getAllPostsForUser(req, res, next);
             });
 
         // GET All users
         app.route("/api/users")
-            .get((req, res, next) => {
+            .get(authJwt, (req, res, next) => {
                 this._userController.getAllUsers(req, res, next);
             });
 
         // GET All posts of everyone
         app.route("/api/posts")
-            .get((req, res, next) => {
+            .get(authJwt, (req, res, next) => {
                 this._postController.getAllPosts(req, res, next);
             });
 
@@ -68,6 +68,10 @@ export class Routes {
         //         this._userController.loginUser(req, res, next)
         //     });
         app.post("/api/login", authLocal, this._userController.loginUser);
+
+        app.get("/jwt/test", authJwt, (req, res, next) => {
+            res.send("This is private route");
+        })
 
         // POST register a user into the system
         app.route("/api/register")
