@@ -36,15 +36,12 @@ let UserController = class UserController {
                 let responseStatus = 0;
                 let responseData = {};
                 let newUser = new User_1.User(req.body);
-                console.log(newUser);
                 yield this._userService.registerUserInDb(newUser);
                 responseStatus = 200;
                 responseData = newUser;
                 res.status(responseStatus).json(responseData);
             }
             catch (error) {
-                console.log(error);
-                console.log(error.message);
                 res.status(500).json(error.message);
             }
         });

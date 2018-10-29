@@ -1,6 +1,6 @@
+import { NextFunction, Request, Response } from "express-serve-static-core";
+
 import { IUserModel } from "../../models/User";
-import { IUser } from "../../models/interfaces/IUser";
-import { Request, Response, NextFunction } from "express-serve-static-core";
 
 export interface IUserService {
     registerUserInDb(newUser: IUserModel): Promise<void>

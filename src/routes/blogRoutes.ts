@@ -1,10 +1,9 @@
+import { authJwt, authLocal } from "../auth/passport";
 import { inject, injectable } from "inversify";
-import TYPES from "../types";
-import { Request, Response } from "express";
-import { IUserController } from "../controllers/interfaces/IUserController";
+
 import { IPostController } from "../controllers/interfaces/IPostController";
-import passport = require("passport");
-import { authLocal, authJwt } from "../auth/passport";
+import { IUserController } from "../controllers/interfaces/IUserController";
+import TYPES from "../types";
 
 @injectable()
 export class Routes {

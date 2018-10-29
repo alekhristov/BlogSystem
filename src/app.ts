@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as mongoose from "mongoose";
@@ -7,6 +8,7 @@ import { inject, injectable } from "inversify";
 
 import { Routes } from "./routes/blogRoutes";
 import TYPES from "./types";
+
 import passport = require("passport");
 
 @injectable()

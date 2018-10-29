@@ -1,10 +1,11 @@
-import { injectable, inject } from "inversify";
-import TYPES from "../types";
-import { Post } from "../models/Post";
-import { Request, Response, NextFunction } from "express-serve-static-core";
+import { NextFunction, Request, Response } from "express-serve-static-core";
+import { inject, injectable } from "inversify";
+
+import { IPostController } from "./interfaces/IPostController";
 import { IPostService } from "../services/interfaces/IPostService";
 import { IUserService } from "../services/interfaces/IUserService";
-import { IPostController } from "./interfaces/IPostController";
+import { Post } from "../models/Post";
+import TYPES from "../types";
 
 @injectable()
 export class PostController implements IPostController{

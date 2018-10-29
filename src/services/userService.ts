@@ -1,9 +1,9 @@
-import { injectable } from "inversify";
-import { User, IUserModel } from "../models/User";
+import { IUserModel, User } from "../models/User";
+import { NextFunction, Request, Response } from "express-serve-static-core";
+
 import { IUserService } from "./interfaces/IUserService";
 import { authLocal } from "../auth/passport";
-import { Request, Response, NextFunction } from "express-serve-static-core";
-import { IUser } from "../models/interfaces/IUser";
+import { injectable } from "inversify";
 
 @injectable()
 export class UserService implements IUserService {

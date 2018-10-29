@@ -1,9 +1,9 @@
 import * as passport from "passport";
 import * as passportLocal from "passport-local";
-import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 
-import { User, IUserModel } from "../models/User";
-import { IUser } from "../models/interfaces/IUser";
+import { ExtractJwt, Strategy as JWTStrategy } from "passport-jwt";
+import { IUserModel, User } from "../models/User";
+
 require("dotenv").config();
 
 const LocalStrategy = passportLocal.Strategy;

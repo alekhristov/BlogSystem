@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express-serve-static-core";
+import { NextFunction, Request, Response } from "express-serve-static-core";
 
 export interface IPostController {
     getAllPosts(req: Request, res: Response, next: NextFunction): Promise<void>

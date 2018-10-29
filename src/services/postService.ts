@@ -1,6 +1,7 @@
-import { injectable } from "inversify";
 import { IPostModel, Post } from "../models/Post";
+
 import { IPostService } from "./interfaces/IPostService";
+import { injectable } from "inversify";
 
 @injectable()
 export class PostService implements IPostService {

@@ -5,7 +5,6 @@ import { IUserController } from "./interfaces/IUserController";
 import { IUserService } from "../services/interfaces/IUserService";
 import TYPES from "../types";
 import { User } from "../models/User";
-import passport = require("passport");
 
 @injectable()
 export class UserController implements IUserController {
