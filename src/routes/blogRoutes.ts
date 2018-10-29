@@ -62,20 +62,18 @@ export class Routes {
             });
 
         // POST Logs a user into the system an returns JWT
-        // //api/login
-        // app.route("/api/login")
-        //     .post((req, res, next) => {
-        //         this._userController.loginUser(req, res, next)
-        //     });
-        app.post("/api/login", authLocal, this._userController.loginUser);
+        app.route("/api/login")
+            .post(authLocal, this._userController.loginUser);
 
-        app.get("/jwt/test", authJwt, (req, res, next) => {
-            res.send("This is private route");
-        })
+        app.route("/jwt/test")
+            .get(authJwt, (req, res, next) => {
+                res.send("This is а private route");
+            });
 
         // POST register a user into the system
         app.route("/api/register")
-            .post((req, res, next) =>
-                this._userController.registerUser(req, res, next));
+            .post((req, res, next) => {
+                this._userController.registerUser(req, res, next)
+            });
     }
 }

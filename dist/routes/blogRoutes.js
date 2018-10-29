@@ -55,14 +55,9 @@ let Routes = class Routes {
             this._postController.createPostForUser(req, res, next);
         });
         // POST Logs a user into the system an returns JWT
-        // //api/login
-        // app.route("/api/login")
-        //     .post((req, res, next) => {
-        //         this._userController.loginUser(req, res, next)
-        //     });
         app.post("/api/login", passport_1.authLocal, this._userController.loginUser);
         app.get("/jwt/test", passport_1.authJwt, (req, res, next) => {
-            res.send("This is private route");
+            res.send("This is а private route");
         });
         // POST register a user into the system
         app.route("/api/register")

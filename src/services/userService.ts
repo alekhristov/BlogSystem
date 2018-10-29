@@ -9,7 +9,6 @@ import { IUser } from "../models/interfaces/IUser";
 export class UserService implements IUserService {
 
     public async registerUserInDb(newUser: IUserModel): Promise<void> {
-        console.log(newUser);
         await newUser.save();
         console.log("User registered successfully!")
     };
