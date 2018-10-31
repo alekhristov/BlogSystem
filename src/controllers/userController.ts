@@ -28,7 +28,7 @@ export class UserController implements IUserController {
 
             let newUser = new User(req.body);
             await this._userService.registerUserInDb(newUser);
-            responseStatus = 200;
+            responseStatus = 201;
             responseData = newUser;
 
             res.status(responseStatus).json(responseData);
@@ -56,16 +56,18 @@ export class UserController implements IUserController {
 
             const users = await this._userService.getAllUsersFromDb();
 
-            if (!users || users.length === 0) {
-                responseStatus = 404;
-                throw new Error("There is no users yet!");
+            if (!users) {
+                responseStatus = 401;
+            } else if (users.length === 0) {
+                responseStatus = 200;
+                throw new Error("There is no posts yet!")
             }
             responseStatus = 200;
             responseData = users;
 
             res.status(responseStatus).json(responseData);
         } catch (error) {
-            res.status(404).json(error.message)
+            res.status(500).json(error.message)
         }
     };
 

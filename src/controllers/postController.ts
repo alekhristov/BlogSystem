@@ -8,19 +8,19 @@ import { Post } from "../models/Post";
 import TYPES from "../types";
 
 @injectable()
-export class PostController implements IPostController{
+export class PostController implements IPostController {
 
-    private readonly _postService : IPostService;
-    private readonly _userService : IUserService;
+    private readonly _postService: IPostService;
+    private readonly _userService: IUserService;
 
     public constructor(
         @inject(TYPES.IPostService) postService: IPostService,
         @inject(TYPES.IUserService) userService: IUserService
     ) {
-        if (!postService){
+        if (!postService) {
             throw new Error("PostService can not be null!")
         }
-        if (!userService){
+        if (!userService) {
             throw new Error("UserService can not be null!")
         }
 
@@ -35,8 +35,10 @@ export class PostController implements IPostController{
 
             const posts = await this._postService.getAllPostsFromDb();
 
-            if (!posts || posts.length === 0) {
-                responseStatus = 404;
+            if (!posts) {
+                responseStatus = 401;
+            } else if (posts.length === 0) {
+                responseStatus = 200;
                 throw new Error("There is no posts yet!")
             }
             responseStatus = 200;
@@ -56,6 +58,7 @@ export class PostController implements IPostController{
             const user = await this._userService.getUserByUsernameFromDb(req.params.username);
 
             if (!user) {
+                responseStatus = 401;
                 throw new Error("There is no such user!")
             }
 
@@ -67,13 +70,13 @@ export class PostController implements IPostController{
                 responseData = allPostsForUser;
 
             } else {
-                responseStatus = 400;
+                responseStatus = 200;
                 responseData = "The user has no posts yet!";
             }
 
             res.status(responseStatus).send(responseData);
         } catch (error) {
-            res.status(404).send(error.message);
+            res.status(500).send(error.message);
         }
     };
 
@@ -84,7 +87,7 @@ export class PostController implements IPostController{
 
             let newPost = new Post(req.body);
             await this._postService.createPostForUserInDb(newPost);
-            responseStatus = 200;
+            responseStatus = 201;
             responseData = newPost;
 
             res.status(responseStatus).json(responseData);
