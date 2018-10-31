@@ -29,7 +29,7 @@ export class Routes {
     public routes(app): void {
 
         // GET Home page
-        app.route('/')
+        app.route("/")
             .get((req, res, next) => {
                 res.status(200).send({
                     message: "GET request successfulll!!!!"

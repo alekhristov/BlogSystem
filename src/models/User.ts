@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken";
 import { Document, Model, Schema, model } from "mongoose";
 
 import { IUser } from "./interfaces/IUser";
+
 require("dotenv").config();
 
 import bcrypt = require("bcrypt");
@@ -41,7 +42,7 @@ const userSchema: any = new Schema({
 });
 
 //hashing a password before saving it to the database
-userSchema.pre('save', function (next) {
+userSchema.pre("save", function (next) {
     let user = this;
     bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) {
